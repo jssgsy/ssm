@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"  
+	xmlns:tx="http://www.springframework.org/schema/tx"  
+	xmlns:aop="http://www.springframework.org/schema/aop"  
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd 
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+	<!-- 配置spring注解驱动 -->
+	<context:annotation-config />
+	
+	<!-- 配置springmvc注解驱动 -->
+	<!-- 必不可少，否则静态资源无法处理 ，有了这句上面的spring注解驱动的配置可以去掉-->
+	<mvc:annotation-driven conversion-service="conversionService"/>
+	
+	<!-- 配置静态资源处理器 -->
+	<mvc:resources location="/easyui/" mapping="/easyui/**"/> 
+	
+	<!-- 控制器和业务bean的自动扫描 -->
+	<context:component-scan base-package="com.univ.controller" />
+	<context:component-scan base-package="com.univ.service" />
+	
+	<!-- 配置视图解析器 -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+		<property name="prefix" value="/WEB-INF/jsp/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- 在这里启用链式视图解析器 -->
+	
+	<!-- 配置数据源 -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />		
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/ssme?useUnicode=yes&amp;characterEncoding=UTF8" />		
+		<property name="username" value="root" />
+		<property name="password" value="163.com" />
+	</bean>
+	
+	<!-- 配置SQLSessionFactory(在这里将mybatis的核心配置文件加入) -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="configLocation" value="classpath:mybatis.xml" />
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- mapper接口自动扫描(在之前必须配置SqlSessionFactoryBean) -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+	   <property name="basePackage" value="com.univ.mapper" />
+	</bean>
+	
+	<!-- 声明事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED"/>
+			<tx:method name="add*" propagation="REQUIRED"/>
+			<tx:method name="update*" propagation="REQUIRED"/>
+			<tx:method name="mod*" propagation="REQUIRED"/>
+			<tx:method name="del*" propagation="REQUIRED"/>
+			<tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+		</tx:attributes>
+	</tx:advice>
+	
+	<aop:config>
+		<aop:advisor pointcut="execution(* * ..DataDicService.*(..))" advice-ref="txAdvice"/>
+	</aop:config>
+	
+	<!-- 注册类型转换器 -->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="com.univ.converter.MyConverter"/>
+			</set>
+		</property>
+	</bean>
+ 
+ 	<!-- 配置拦截器 -->
+	<mvc:interceptors>
+	    <!-- 配置全局拦截器 -->
+	    <bean class="com.univ.interceptor.DebugInterceptor"></bean>
+	</mvc:interceptors>
+</beans>
+<!-- 说明：
+1.使用了<context:component-scan />则可以不使用<context:annotation-config />
+	<mvc:annotation-driven/> 属于springmvc。<context:annotation-config/> 属于 spring。
+	参考：http://blog.csdn.net/wangkai0681080/article/details/8447916
+2.实验证明要使<mvc:resources />起作用则必须使用 <mvc:annotation-driven />
+
+ -->
+ 
