@@ -79,11 +79,21 @@
 		<aop:advisor pointcut="execution(* * ..DataDicService.*(..))" advice-ref="txAdvice"/>
 	</aop:config>
 	
-	<!-- 注册类型转换器 -->
-	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+	<!-- 注册类型转换器/格式化 -->
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+		<property name="registerDefaultFormatters" value="false" /><!-- 此句在这里可以省略 -->
 		<property name="converters">
 			<set>
 				<bean class="com.univ.converter.MyConverter"/>
+			</set>
+		</property>
+		
+		<property name="formatters">
+			<set>
+				<!-- 配置全局日期转换器 -->
+				<bean class="org.springframework.format.datetime.DateFormatter" >
+					<property name="pattern" value="yyyy-MM-dd"/>
+				</bean>
 			</set>
 		</property>
 	</bean>

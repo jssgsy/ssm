@@ -1,6 +1,10 @@
 package com.univ.controller;
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,5 +43,26 @@ public class HomeController {
 		System.out.println(age);
 		return "converter";
 	}
+	
+	/**
+	 * 跳转到converter.jsp页面上
+	 */
+	@RequestMapping("/toFormatter")
+	public String toFormatter(){
+		return "formatter";
+	}
+	
+	/**
+	 * 测试全局日期格式化
+	 * @param date
+	 */
+	@RequestMapping("/formatter")
+	public String formatter(Date date){
+		System.out.println(date);
+		return "formatter";
+	}
+	
+	
+	
 }
 
