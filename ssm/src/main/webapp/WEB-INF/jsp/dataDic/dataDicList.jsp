@@ -26,7 +26,7 @@
 			<tr>
 				<!-- 将文本和input标签放在不同的td中，有助于施加样式，如上面设置将文本向右对齐 -->
 				<td>数据项:</td>
-				<td><input id="name_add" name="name"></td>
+				<td><input id="name_add" name="name" class="easyui-textbox" data-options="required:true" style="width:172px;"></td>
 			</tr>
 			<tr>
 				<td>描述:</td>
@@ -36,7 +36,7 @@
 			</tr>
 			<tr>
 				<td>数据类型:</td>
-				<td><input id="parent_add" name="parent.id"></td>
+				<td><input id="parent_add" name="parent.id" style="width:172px;"></td>
 			</tr>		
 		</table>
 		<!-- 下面是保存和取消操作（取消操作直接写在这里） -->
@@ -54,7 +54,10 @@
 			<tr>
 				<!-- 将文本和input标签放在不同的td中，有助于施加样式，如上面设置将文本向右对齐 -->
 				<td>数据项:</td>
-				<td><input id="name_update" name="name"><input type="hidden" id="id_update" name="id"></td>
+				<td>
+					<input id="name_update" name="name" class="easyui-textbox" data-options="required:true" style="width:172px;">
+					<input type="hidden" id="id_update" name="id">
+				</td>
 			</tr>
 			<tr>
 				<td>描述:</td>
@@ -62,7 +65,7 @@
 			</tr>
 			<tr>
 				<td>数据类型:</td>
-				<td><input id="parent_update" name="parent.id"></td>
+				<td><input id="parent_update" name="parent.id" style="width:172px;"></td>
 			</tr>		
 		</table>
 		<!-- 下面是保存和取消操作（取消操作直接写在这里） -->
@@ -159,10 +162,6 @@ function addDataDic(){
 function add_dialog(){
 	$("#addDataDic_dialog").css("display","block");
 	//设置各字段对应的easyui插件
-	$("#name_add").textbox({
-		required:true
-	});
-	
 	$("#parent_add").combobox({
 		url:'dataDic/getLevelOne',
 		valueField:'id',
@@ -215,10 +214,6 @@ function update_dialog(){
 	
 	$("#updateDataDic_dialog").css("display","block");
 	//设置各字段对应的easyui插件
-	$("#name_update").textbox({
-		required:true
-	});
-	
 	$("#parent_update").combobox({
 		url:'dataDic/getLevelOne',
 		valueField:'id',
