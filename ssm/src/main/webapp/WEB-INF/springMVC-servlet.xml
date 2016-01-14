@@ -33,12 +33,16 @@
 	
 	<!-- 配置视图解析器 -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!-- 提供jstl的支持(实验证明，不指定也可以,当然一般都指定) -->
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 		<property name="prefix" value="/WEB-INF/jsp/"/>
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
 	<!-- 在这里启用链式视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
+		<property name="order" value="0"/>
+	</bean>
 	
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
