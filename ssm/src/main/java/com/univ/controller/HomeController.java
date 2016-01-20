@@ -22,7 +22,6 @@ public class HomeController {
 	
 	@RequestMapping("/toHome")
 	public String toHome(){
-		logger.debug("=======HomeController.tohHome() invoked=======");
 		return "home";
 	}
 	
@@ -45,7 +44,7 @@ public class HomeController {
 	}
 	
 	/**
-	 * 跳转到converter.jsp页面上
+	 * 跳转到formatter.jsp页面上
 	 */
 	@RequestMapping("/toFormatter")
 	public String toFormatter(){
