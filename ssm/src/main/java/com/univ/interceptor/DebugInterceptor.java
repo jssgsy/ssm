@@ -1,5 +1,7 @@
 package com.univ.interceptor;
 
+import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,8 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
  * @Description: 调试时输出请求路径，响应方法，返回视图等等
  */
 public class DebugInterceptor implements HandlerInterceptor{
+	private long before;
+	private long after;
+	
     public boolean preHandle(HttpServletRequest request,
             HttpServletResponse response, Object handler) throws Exception {
+    	before = System.currentTimeMillis();
         return true;//返回为true后面的postHandle方法和afterCompletion方法才会被执行
     }
     public void postHandle(HttpServletRequest request,
@@ -39,7 +45,9 @@ public class DebugInterceptor implements HandlerInterceptor{
     }
     public void afterCompletion(HttpServletRequest request,
             HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {       
+            throws Exception {    
+    	after = System.currentTimeMillis();
+    	System.out.println("处理时间： " + (after-before) + "毫秒");
     }
 }
 
