@@ -17,18 +17,10 @@
 	http://www.springframework.org/schema/aop
 	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!-- 配置spring注解驱动 -->
-	<context:annotation-config />
 
-	<!-- 配置springmvc注解驱动 -->
-	<!-- 必不可少，否则静态资源无法处理 ，有了这句上面的spring注解驱动的配置可以去掉-->
-	<mvc:annotation-driven conversion-service="conversionService"/>
-	
+    <!-- 配置静态资源处理器 -->
+    <mvc:resources location="/easyui/" mapping="/easyui/**"/>
 
-	<!-- 控制器和业务bean的自动扫描 -->
-	<context:component-scan base-package="com.univ.controller" />
-	<context:component-scan base-package="com.univ.service" />
-	
 	<!-- 配置视图解析器 -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 提供jstl的支持(实验证明，不指定也可以,当然一般都指定) -->

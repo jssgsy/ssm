@@ -18,8 +18,22 @@
 	http://www.springframework.org/schema/aop/spring-aop.xsd">
 
 
-    <!-- 配置静态资源处理器 -->
-    <mvc:resources location="/easyui/" mapping="/easyui/**"/>
+    <!-- 配置spring注解驱动,作用是式地向Spring容器注册
+    AutowiredAnnotationBeanPostProcessor、
+    CommonAnnotationBeanPostProcessor、
+    PersistenceAnnotationBeanPostProcessor以及
+    RequiredAnnotationBeanPostProcessor
+    这4个BeanPostProcessor。
+    注册这4个 BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解。-->
+    <context:annotation-config />
+
+    <!-- 控制器和业务bean的自动扫描,有component-scan可以不用配置annotation-config -->
+    <context:component-scan base-package="com.univ.controller" />
+    <context:component-scan base-package="com.univ.service" />
+
+    <!-- 配置springmvc注解驱动 -->
+    <!-- 必不可少，否则静态资源无法处理 。conversionService引用自下面定义的bean,用来注册自定义的converter-->
+    <mvc:annotation-driven conversion-service="conversionService"/>
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
@@ -81,7 +95,8 @@
 </beans>
 <!-- 说明：
     1.使用了<context:component-scan />则可以不使用<context:annotation-config />
-        <mvc:annotation-driven/> 属于springmvc。<context:annotation-config/> 属于 spring。
+        <mvc:annotation-driven/> 属于springmvc。
+        <context:annotation-config/> 属于spring。
         参考：http://blog.csdn.net/wangkai0681080/article/details/8447916
     2.实验证明要使<mvc:resources />起作用则必须使用 <mvc:annotation-driven />
  -->
