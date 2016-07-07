@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.web.client.match.MockRestRequestMatchers;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.ResultHandler;
@@ -43,6 +44,21 @@ public class MenuControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(1))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].iconCls").value("icon-save"))
                 .andExpect(MockMvcResultMatchers.header().string("Content-Type","application/json;charset=UTF-8"))
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void testAddMenu() throws Exception {
+
+        /**
+         * 演示如何在springmvc的单元测试中给类类型传参。
+         * 会直接将这里的name和url和controller方法中的menu的name和url属性绑定在一起
+         */
+        mockMvc.perform(MockMvcRequestBuilders.post("/menu/addMenu")
+                    .param("name","xxx")
+                    .param("url","xxxxxxxxxx")
+                )
+                .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
 
