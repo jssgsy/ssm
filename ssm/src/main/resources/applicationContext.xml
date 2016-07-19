@@ -99,4 +99,7 @@
         <context:annotation-config/> 属于spring。
         参考：http://blog.csdn.net/wangkai0681080/article/details/8447916
     2.实验证明要使<mvc:resources />起作用则必须使用 <mvc:annotation-driven />
+    3.<mvc:annotation-driven/>标签还会注册一个默认的ConversionService，
+    即FormattingConversionServiceFactoryBean，由于要自定义converter，
+    因此要显示定义一个ConversionSerivce覆盖默认的实现。
  -->
