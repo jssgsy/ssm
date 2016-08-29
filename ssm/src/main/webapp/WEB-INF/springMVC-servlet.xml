@@ -21,7 +21,7 @@
     <!-- 配置静态资源处理器 -->
     <mvc:resources location="/easyui/" mapping="/easyui/**"/>
 
-	<!-- 配置视图解析器 -->
+	<!-- 配置视图解析器:InternalResourceViewResolver -->
 	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<!-- 提供jstl的支持(实验证明，不指定也可以,当然一般都指定) -->
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
@@ -29,7 +29,11 @@
 		<property name="suffix" value=".jsp"/>
 	</bean>
 	
-	<!-- 在这里启用链式视图解析器 -->
+	<!--  配置视图解析器:XmlViewResolver
+	  	  1.XmlViewResolver的默认配置文件位于/WEB-INF/views.xml下。
+	  	    即使通过location指定位置,位置也应该放在/WEB-INF下。参考javadoc。
+	  	  2.order值越小,越先尝试解析(优先级高);
+	  -->
 	<bean class="org.springframework.web.servlet.view.XmlViewResolver">
 		<property name="order" value="0"/>
 	</bean>
