@@ -20,6 +20,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
+            <scope>provided</scope>
 		</dependency>
 		
 		<!--JSP-->
@@ -100,6 +101,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+            <!--遇到的很大坑是：时隔多日，不同版本的msyql可能需要的版本不一样-->
 			<version>5.1.30</version>
 		</dependency>
 		
