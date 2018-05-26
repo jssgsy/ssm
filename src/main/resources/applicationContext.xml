@@ -25,11 +25,11 @@
     RequiredAnnotationBeanPostProcessor
     这4个BeanPostProcessor。
     注册这4个 BeanPostProcessor的作用，就是为了你的系统能够识别相应的注解。-->
-    <context:annotation-config />
+    <context:annotation-config/>
 
     <!-- 控制器和业务bean的自动扫描,有component-scan可以不用配置annotation-config -->
-    <context:component-scan base-package="com.univ.controller" />
-    <context:component-scan base-package="com.univ.service" />
+    <context:component-scan base-package="com.univ.controller"/>
+    <context:component-scan base-package="com.univ.service"/>
 
     <!-- 配置springmvc注解驱动 -->
     <!-- 必不可少，否则静态资源无法处理 。conversionService引用自下面定义的bean,用来注册自定义的converter-->
@@ -37,21 +37,21 @@
 
     <!-- 配置数据源 -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ssm?useUnicode=yes&amp;characterEncoding=UTF8" />
-        <property name="username" value="root" />
-        <property name="password" value="/*1Univ2mysql*/" />
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ssm?useUnicode=yes&amp;characterEncoding=UTF8"/>
+        <property name="username" value="test"/>
+        <property name="password" value="123"/>
     </bean>
 
     <!-- 配置SQLSessionFactory(在这里将mybatis的核心配置文件加入) -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <property name="configLocation" value="classpath:mybatis.xml" />
+        <property name="configLocation" value="classpath:mybatis.xml"/>
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <!-- mapper接口自动扫描(在之前必须配置SqlSessionFactoryBean) -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.univ.mapper" />
+        <property name="basePackage" value="com.univ.mapper"/>
     </bean>
 
     <!-- 声明事务管理器 -->
@@ -76,7 +76,7 @@
 
     <!-- 注册类型转换器/格式化 -->
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
-        <property name="registerDefaultFormatters" value="false" /><!-- 默认为true -->
+        <property name="registerDefaultFormatters" value="false"/><!-- 默认为true -->
         <property name="converters">
             <set>
                 <bean class="com.univ.converter.MyConverter"/>
@@ -86,20 +86,20 @@
         <property name="formatters">
             <set>
                 <!-- 配置全局日期转换器 -->
-                <bean class="org.springframework.format.datetime.DateFormatter" >
+                <bean class="org.springframework.format.datetime.DateFormatter">
                     <property name="pattern" value="yyyy-MM-dd"/>
                 </bean>
             </set>
         </property>
     </bean>
 </beans>
-<!-- 说明：
-    1.使用了<context:component-scan />则可以不使用<context:annotation-config />
-        <mvc:annotation-driven/> 属于springmvc。
-        <context:annotation-config/> 属于spring。
-        参考：http://blog.csdn.net/wangkai0681080/article/details/8447916
-    2.实验证明要使<mvc:resources />起作用则必须使用 <mvc:annotation-driven />
-    3.<mvc:annotation-driven/>标签还会注册一个默认的ConversionService，
-    即FormattingConversionServiceFactoryBean，由于要自定义converter，
-    因此要显示定义一个ConversionSerivce覆盖默认的实现。
- -->
+        <!-- 说明：
+            1.使用了<context:component-scan />则可以不使用<context:annotation-config />
+                <mvc:annotation-driven/> 属于springmvc。
+                <context:annotation-config/> 属于spring。
+                参考：http://blog.csdn.net/wangkai0681080/article/details/8447916
+            2.实验证明要使<mvc:resources />起作用则必须使用 <mvc:annotation-driven />
+            3.<mvc:annotation-driven/>标签还会注册一个默认的ConversionService，
+            即FormattingConversionServiceFactoryBean，由于要自定义converter，
+            因此要显示定义一个ConversionSerivce覆盖默认的实现。
+         -->

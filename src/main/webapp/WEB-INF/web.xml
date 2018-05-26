@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="WebApp_9" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
-		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
     <!--spring应用上下文的配置文件applicationContext.xml位置
         默认位于/WEB-INF/applicationContext.xml。
@@ -13,16 +13,16 @@
         <param-value>classpath:applicationContext.xml</param-value>
     </context-param>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
 
-	<!-- 加载SpringMVC核心控制器,作用是定义与web相关的HandlerMapping,Controller,ViewResolver等组件.
-	默认的路径为:/WEB-INF/<servlet-name>-servlet.xml -->
-	<servlet>
-		<servlet-name>springMVC</servlet-name>
-		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!-- 加载SpringMVC核心控制器,作用是定义与web相关的HandlerMapping,Controller,ViewResolver等组件.
+    默认的路径为:/WEB-INF/<servlet-name>-servlet.xml -->
+    <servlet>
+        <servlet-name>springMVC</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <!--实际先中,可能需要将<servlet-name>-servlet.xml拆分成几个单独的配置文件,
             此时可通过配置初始化参数contextConfigLocation来加载这些被拆分的配置文件
             就像applicationContext.xml的处理一样。
@@ -31,17 +31,17 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>/WEB-INF/module1-servlet.xml,/WEB-INF/module2-servlet.xml</param-value>
         </init-param>-->
-		<load-on-startup>1</load-on-startup>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>springMVC</servlet-name>
-		<url-pattern>/</url-pattern>
-	</servlet-mapping>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
 
 
     <!-- spring编码过滤器(对get请求不起作用，还得直接改tomcat的配置文件) -->
     <filter>
-        <filter-name>encodingFilter </filter-name>
+        <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
         <init-param>
             <param-name>encoding</param-name>
@@ -56,6 +56,6 @@
         <filter-name>encodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
-	  
- 	
+
+
 </web-app>
